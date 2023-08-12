@@ -11,6 +11,12 @@
 				<img src="https://images.unsplash.com/flagged/photo-1564767609342-620cb19b2357?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1373&q=80" alt="key" class="w-full rounded-2xl"/>
 			</div>
 			<div class="w-full md:w-[67%] lg:w-[40%] lg:ml-20">
+				{% if form_errors(registrationForm) %}
+					<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+						{{ form_errors(registrationForm) }}
+					</div>
+				{% endif %}
+				
 				{{ form_start(registrationForm) }}
 				{{ form_widget(registrationForm.name, {attr: {class: "mb-6 w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out", placeholder: "Full name"}}) }}
 				{{ form_widget(registrationForm.email, {attr: {class: "mb-6 w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out", placeholder: "Email address"}}) }}
@@ -37,5 +43,5 @@
 			</div>
 		</div>
 	</section>
-	
+
 {% endblock %}
