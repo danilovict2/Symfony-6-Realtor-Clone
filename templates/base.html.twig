@@ -1,18 +1,47 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </body>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!{% endblock %}
+		</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+	</head>
+	<body>
+		{% set route_name = app.request.attributes.get('_route') %}
+		<div class="bg-white border-b shadow-sm sticky top-0 z-50">
+			<header class="flex justify-between items-center px-3 max-w-6xl mx-auto">
+				<div>
+					<img src="https://static.rdc.moveaws.com/images/logos/rdc-logo-default.svg" alt="logo" class="h-5 cursor-pointer"/>
+				</div>
+				<div>
+					<ul class="flex space-x-10">
+						<a href="{{ path('homepage') }}">
+							<li class="{% if route_name == "homepage" %}text-black border-b-red-500 {% else %}border-b-transparent text-gray-400 {% endif %}cursor-pointer py-3 text-sm font-semibold border-b-[3px]">
+								Home
+							</li>
+						</a>
+                        <a href="#">
+                            <li class="{% if route_name == "#" %}text-black border-b-red-500 {% else %}border-b-transparent text-gray-400 {% endif %}cursor-pointer py-3 text-sm font-semibold border-b-[3px]">
+							    Offers
+						    </li>  
+                        </a>
+						<a href="#">
+                            <li class="{% if route_name == "#" %}text-black border-b-red-500 {% else %}border-b-transparent text-gray-400 {% endif %}cursor-pointer py-3 text-sm font-semibold border-b-[3px]">
+							    Sign in
+						    </li>
+                        </a>
+					</ul>
+				</div>
+			</header>
+		</div>
+		{% block body %}{% endblock %}
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</body>
 </html>
