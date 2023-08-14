@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "~vue-toastify/index.css";
 
 body {
     background-color: rgb(240, 253, 244);

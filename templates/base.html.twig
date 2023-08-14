@@ -3,7 +3,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome!{% endblock %}
+			{% block title %}Welcome!
+			{% endblock %}
 		</title>
 		<link rel="icon" href="https://static.rdc.moveaws.com/favicon.ico">
 		{% block stylesheets %}
@@ -24,16 +25,24 @@
 								Home
 							</li>
 						</a>
-                        <a href="#">
-                            <li class="{% if route_name == "#" %}text-black border-b-red-500 {% else %}border-b-transparent text-gray-400 {% endif %}cursor-pointer py-3 text-sm font-semibold border-b-[3px]">
-							    Offers
-						    </li>  
-                        </a>
-						<a href="{{ path('app_login') }}">
-                            <li class="{% if route_name == "app_login" %}text-black border-b-red-500 {% else %}border-b-transparent text-gray-400 {% endif %}cursor-pointer py-3 text-sm font-semibold border-b-[3px]">
-							    Sign in
-						    </li>
-                        </a>
+						<a href="#">
+							<li class="{% if route_name == "#" %}text-black border-b-red-500 {% else %}border-b-transparent text-gray-400 {% endif %}cursor-pointer py-3 text-sm font-semibold border-b-[3px]">
+								Offers
+							</li>
+						</a>
+						{% if is_granted("ROLE_USER") %}
+							<a href="{{ path('profile') }}">
+								<li class="{% if route_name == "profile" %}text-black border-b-red-500 {% else %}border-b-transparent text-gray-400 {% endif %}cursor-pointer py-3 text-sm font-semibold border-b-[3px]">
+									Profile
+								</li>
+							</a>
+						{% else %}
+							<a href="{{ path('app_login') }}">
+								<li class="{% if route_name == "app_login" %}text-black border-b-red-500 {% else %}border-b-transparent text-gray-400 {% endif %}cursor-pointer py-3 text-sm font-semibold border-b-[3px]">
+									Sign in
+								</li>
+							</a>
+						{% endif %}
 					</ul>
 				</div>
 			</header>
