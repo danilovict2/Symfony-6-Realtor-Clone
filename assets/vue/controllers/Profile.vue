@@ -26,6 +26,12 @@
                     </p>
                 </div>
             </form>
+            <button 
+                class="w-full bg-blue-600 text-white uppercase px-7 py-3 text-sm font-medium rounded shadow-md hover:bg-blue-700 transition duration-150 ease-in-out hover:shadow-lg active:bg-blue-800"
+                @click="redirect('/listing/create')"
+            >
+                Sell or rent your home
+            </button>
         </div>
     </section>
 </template>
@@ -50,16 +56,20 @@ function logout() {
         });
 }
 
+function redirect(url) {
+    window.location = url;
+}
+
 function edit() {
     if (isEditable.value) {
         axios.post('/profile/update', null, {
-                params: {
-                    name: name.value
-                }
-            })
+            params: {
+                name: name.value
+            }
+        })
             .catch(error => {
                 name.value = error.response.data.name;
-                useToast().notify({title: 'Error', body: error.response.data.error, type: "error"})
+                useToast().notify({ title: 'Error', body: error.response.data.error, type: "error" })
             });
     }
     isEditable.value = !isEditable.value;

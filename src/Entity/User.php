@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -35,6 +37,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: 'Name is required!')]
     #[Assert\Length(max: 255, maxMessage: 'Your name cannot be longer than {{ limit }} characters')]
     private ?string $name = null;
+
+    #[ORM\OneToMany(mappedBy: 'createdBy', targetEntity: Listing::class)]
+    private Collection $listings;
+
+    public function __construct()
+    {
+        $this->listings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -114,6 +124,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Listing>
+     */
+    public function getListings(): Collection
+    {
+        return $this->listings;
+    }
+
+    public function addListing(Listing $listing): static
+    {
+        if (!$this->listings->contains($listing)) {
+            $this->listings->add($listing);
+            $listing->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListing(Listing $listing): static
+    {
+        if ($this->listings->removeElement($listing)) {
+            // set the owning side to null (unless already changed)
+            if ($listing->getCreatedBy() === $this) {
+                $listing->setCreatedBy(null);
+            }
+        }
 
         return $this;
     }
