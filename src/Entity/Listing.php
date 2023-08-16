@@ -81,6 +81,9 @@ class Listing
     #[ORM\OneToMany(mappedBy: 'listing', targetEntity: ListingImage::class, orphanRemoval: true)]
     private Collection $images;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -273,6 +276,18 @@ class Listing
                 $image->setListing(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
