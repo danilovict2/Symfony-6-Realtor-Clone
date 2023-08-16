@@ -73,8 +73,7 @@
                 </div>
                 <div>
                     <p class="text-lg font-semibold">Longitude</p>
-                    <input type="number" id="longitude" v-model="longitude" min="-180"
-                        max="180"
+                    <input type="number" id="longitude" v-model="longitude" min="-180" max="180"
                         class="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:bg-white focus:text-gray-700 focus:border-slate-600 text-center" />
                 </div>
             </div>
@@ -170,25 +169,16 @@ function createListing() {
     if (!isValid()) {
         return;
     }
-    axios.post('/listing/store', {
-            type: type.value,
-            name: name.value,
-            bedrooms: bedrooms.value,
-            bathrooms: bathrooms.value,
-            parking: parking.value,
-            furnished: furnished.value,
-            address: address.value,
-            description: description.value,
-            regularPrice: regularPrice.value,
-            discountedPrice: offer.value ? discountedPrice.value : null,
-            latitude: latitude.value,
-            longitude: longitude.value,
-        })
+    let data = createFormData();
+    axios.post('/listing/store', data, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    })
         .then((response) => {
             window.location = '/listing/' + response.data.id;
         })
         .catch(error => {
-            console.log(error);
             useToast().notify({ title: 'Error', body: error.response.data.error, type: "error" })
         });
 }
@@ -203,6 +193,26 @@ function isValid() {
         return false;
     }
     return true;
+}
+
+function createFormData() {
+    let data = new FormData();
+    data.append('type', type.value);
+    data.append('name', name.value);
+    data.append('bedrooms', Number(bedrooms.value));
+    data.append('bathrooms', Number(bathrooms.value));
+    data.append('parking', Boolean(parking.value));
+    data.append('furnished', Boolean(furnished.value));
+    data.append('address', address.value);
+    data.append('description', description.value);
+    data.append('regularPrice', Number(regularPrice.value));
+    data.append('discountedPrice', offer.value ? Number(discountedPrice.value) : null);
+    data.append('latitude', latitude.value);
+    data.append('longitude', longitude.value);
+    for (let image of images.value) {
+        data.append('images[]', image);
+    }
+    return data;
 }
 </script>
 

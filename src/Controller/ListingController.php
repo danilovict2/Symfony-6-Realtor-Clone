@@ -27,8 +27,8 @@ class ListingController extends AbstractController
     #[Route('/listing/store', name: 'listing_store', methods: ["POST"])]
     public function store(Request $request, ValidatorInterface $validator, EntityManagerInterface $entityManager): Response
     {
-        $data = json_decode($request->getContent(), true);
-        $listing = $this->listingRepository->createListing($data);
+        $data = $this->formatData($request->request->all());
+        $listing = $this->listingRepository->createListing($data, $request->files->get('images'));
 
         $errors = $validator->validate($listing);
         if ($errors->count() > 0) {
@@ -39,5 +39,13 @@ class ListingController extends AbstractController
         $entityManager->persist($listing);
         $entityManager->flush();
         return new Response(json_encode(['id' => $listing->getId()]));
+    }
+
+    private function formatData(array $data): array
+    {
+        $data['parking'] = $data['parking'] === 'true';
+        $data['furnished'] = $data['furnished'] === 'true';
+        $data['discountedPrice'] = $data['discountedPrice'] !== 'null' ? (int)$data['discountedPrice'] : null;
+        return $data;
     }
 }

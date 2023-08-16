@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Listing;
+use App\Entity\ListingImage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,7 +22,7 @@ class ListingRepository extends ServiceEntityRepository
         parent::__construct($registry, Listing::class);
     }
 
-    public function createListing(array $data): Listing
+    public function createListing(array $data, array $images): Listing
     {
         $listing = new Listing();
         $listing->setType($data['type'])
@@ -33,9 +34,25 @@ class ListingRepository extends ServiceEntityRepository
             ->setFurnished($data['furnished'])
             ->setDescription($data['description'])
             ->setRegularPrice($data['regularPrice'])
+            ->setDiscountedPrice($data['discountedPrice'])
             ->setLatitude($data['latitude'])
             ->setLongitude($data['longitude'])
         ;
+
+        $this->addImages($listing, $images);
         return $listing;
+    }
+
+    private function addImages(Listing $listing, array $images): void
+    {
+        $entityManager = $this->getEntityManager();
+        $listingImageRepository = $entityManager->getRepository(ListingImage::class);
+        foreach ($images as $image) {
+            $listingImage = $listingImageRepository->createListingImage($image);
+            $listing->addImage($listingImage);
+            $listingImage->setListing($listing);
+
+            $entityManager->persist($listingImage);
+        }
     }
 }
