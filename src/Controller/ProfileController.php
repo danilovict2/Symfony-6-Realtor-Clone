@@ -18,7 +18,8 @@ class ProfileController extends AbstractController
     public function show(): Response
     {
         return $this->render('profile/show.html.twig', [
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
+            'listings' => $this->getUser()->getListings()
         ]);
     }
 
