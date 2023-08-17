@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ListingRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Listing
 {
     private const LARGEST_PRICE = 400000000;
@@ -283,6 +284,12 @@ class Listing
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTimeImmutable;
     }
 
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
