@@ -90,6 +90,25 @@ class Listing
         $this->images = new ArrayCollection();
     }
 
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'type' => $this->type,
+            'name' => $this->name,
+            'bedrooms' => $this->bedrooms,
+            'bathrooms' => $this->bathrooms,
+            'parking' => $this->parking,
+            'address' => $this->address,
+            'furnished' => $this->furnished,
+            'description' => $this->description,
+            'regularPrice' => $this->regularPrice,
+            'discountedPrice' => $this->discountedPrice,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
+        ];
+    }
+
     public function getId(): ?int
     {
         return $this->id;

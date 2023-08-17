@@ -1,6 +1,6 @@
 <template>
     <main class="max-w-md px-2 mx-auto">
-        <h1 class="text-3xl text-center mt-6 font-bold">Create a Listing</h1>
+        <h1 class="text-3xl text-center mt-6 font-bold">{{ props.name }}</h1>
         <form>
             <p class="text-lg mt-6 font-semibold">Sell / Rent</p>
             <div class="flex">
@@ -146,20 +146,32 @@ import { ref } from 'vue';
 import { useToast } from 'vue-toastify';
 import axios from 'axios';
 
-let type = ref("rent");
-let name = ref("");
-let bedrooms = ref(1);
-let bathrooms = ref(1);
-let parking = ref(false);
-let furnished = ref(false);
-let address = ref("");
-let description = ref("");
-let offer = ref(false);
-let regularPrice = ref(50);
-let discountedPrice = ref(49);
+let props = defineProps({
+    name: String,
+    listing: {
+        type: Object,
+        default: {
+            id: null, type: 'rent', name: '', bedrooms: 1, bathrooms: 1, parking: false, furnished: false, address: '', 
+            description: '', offer: false, regularPrice: 50, discountedPrice: 49, latitude: 0, longitude: 0
+        }
+    }
+})
+
+console.log(props.listing.type);
+let type = ref(props.listing.type);
+let name = ref(props.listing.name);
+let bedrooms = ref(props.listing.bedrooms);
+let bathrooms = ref(props.listing.bathrooms);
+let parking = ref(props.listing.parking);
+let furnished = ref(props.listing.furnished);
+let address = ref(props.listing.address);
+let description = ref(props.listing.description);
+let offer = ref(props.listing.offer);
+let regularPrice = ref(props.listing.regularPrice);
+let discountedPrice = ref(props.listing.discountedPrice);
 let images = ref({});
-let latitude = ref(0);
-let longitude = ref(0);
+let latitude = ref(props.listing.latitude);
+let longitude = ref(props.listing.longitude);
 
 function setImages(e) {
     images.value = e.target.files;
@@ -175,8 +187,8 @@ function createListing() {
             "Content-Type": "multipart/form-data",
         },
     })
-        .then((response) => {
-            window.location = '/listing/' + response.data.id;
+        .then(() => {
+            window.location = '/profile';
         })
         .catch(error => {
             useToast().notify({ title: 'Error', body: error.response.data.error, type: "error" })
@@ -197,16 +209,17 @@ function isValid() {
 
 function createFormData() {
     let data = new FormData();
+    data.append('id', props.listing.id)
     data.append('type', type.value);
     data.append('name', name.value);
-    data.append('bedrooms', Number(bedrooms.value));
-    data.append('bathrooms', Number(bathrooms.value));
-    data.append('parking', Boolean(parking.value));
-    data.append('furnished', Boolean(furnished.value));
+    data.append('bedrooms', bedrooms.value);
+    data.append('bathrooms', bathrooms.value);
+    data.append('parking', parking.value);
+    data.append('furnished', furnished.value);
     data.append('address', address.value);
     data.append('description', description.value);
-    data.append('regularPrice', Number(regularPrice.value));
-    data.append('discountedPrice', offer.value ? Number(discountedPrice.value) : null);
+    data.append('regularPrice', regularPrice.value);
+    data.append('discountedPrice', offer.value ? discountedPrice.value : null);
     data.append('latitude', latitude.value);
     data.append('longitude', longitude.value);
     for (let image of images.value) {
