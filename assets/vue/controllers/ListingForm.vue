@@ -133,9 +133,9 @@
                     class="w-full px-3 py-1.5 text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:bg-white focus:border-slate-600"
                     @change="setImages" />
             </div>
-            <button type="submit" @click.prevent="createListing"
+            <button type="submit" @click.prevent="submitForm"
                 class="mb-6 w-full px-7 py-3 bg-blue-600 text-white font-medium text-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                Create Listing
+                {{ props.name }}
             </button>
         </form>
     </main>
@@ -157,7 +157,6 @@ let props = defineProps({
     }
 })
 
-console.log(props.listing.type);
 let type = ref(props.listing.type);
 let name = ref(props.listing.name);
 let bedrooms = ref(props.listing.bedrooms);
@@ -177,7 +176,7 @@ function setImages(e) {
     images.value = e.target.files;
 }
 
-function createListing() {
+function submitForm() {
     if (!isValid()) {
         return;
     }
