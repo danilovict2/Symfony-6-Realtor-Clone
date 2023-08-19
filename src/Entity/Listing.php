@@ -106,6 +106,7 @@ class Listing
             'discountedPrice' => $this->discountedPrice,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
+            'images' => array_map(fn($image) => (string)$image, $this->images->toArray())
         ];
     }
 

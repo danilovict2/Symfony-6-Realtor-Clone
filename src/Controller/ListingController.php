@@ -74,4 +74,16 @@ class ListingController extends AbstractController
         $entityManager->flush();
         return $this->redirectToRoute('profile');
     }
+
+    #[Route('/{category}/{listing}', name: 'listing_show')]
+    public function show(string $category, Listing $listing): Response
+    {
+        if ($listing->getCreatedBy() !== $this->getUser() || $listing->getType() !== $category) {
+            return new Response("You aren't allowed to view this listing!", 403);
+        }
+
+        return $this->render('listing/show.html.twig', [
+            'listing' => $listing
+        ]);
+    }
 }

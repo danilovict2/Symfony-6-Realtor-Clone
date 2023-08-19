@@ -186,8 +186,8 @@ function submitForm() {
             "Content-Type": "multipart/form-data",
         },
     })
-        .then(() => {
-            window.location = '/profile';
+        .then((response) => {
+            window.location = '/listing/' + type.value + '/' + response.data.id;
         })
         .catch(error => {
             useToast().notify({ title: 'Error', body: error.response.data.error, type: "error" })
