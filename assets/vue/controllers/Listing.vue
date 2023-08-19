@@ -10,7 +10,7 @@
             <img class="relative w-full overflow-hidden swiper-image" :src="'/uploads/photos/' + image">
         </swiper-slide>
     </swiper>
-    <div class="m-4 flex flex-col md:flex-row max-w-6xl lg:mx-auto p-4 rounded-lg shadow-lg bg-white lg:space-x-5">
+    <div class="m-4 flex max-w-6xl lg:mx-auto p-4 rounded-lg shadow-lg bg-white lg:space-x-5">
         <div class=" w-full h-[200px] lg-[400px]">
           <p class="text-2xl font-bold mb-3 text-blue-900">
             {{ listing.name }} - $&nbsp;
