@@ -46,6 +46,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->listings = new ArrayCollection();
     }
 
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'email' => $this->email,
+            'name' => $this->name
+        ];
+    }
+
     public function getId(): ?int
     {
         return $this->id;
