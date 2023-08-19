@@ -61,7 +61,19 @@
       </div>
       <contact :listing="listing" v-else />
     </div>
-    <div class="bg-blue-300 w-full h-[200px] lg-[400px] z-10 overflow-x-hidden"></div>
+    <div className="w-full h-[200px] md:h-[400px] z-10 overflow-x-hidden mt-6 md:mt-0 md:ml-2">
+      <l-map :center="[listing.latitude, listing.longitude]" :zoom="13"
+        style="height: 100%; width: 100%;">
+        <l-tile-layer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <l-marker :lat-lng="[listing.latitude, listing.longitude]">
+          <l-popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+          </l-popup>
+        </l-marker>
+      </l-map>
+    </div>
   </div>
 </template>
 
@@ -71,6 +83,7 @@ import { Navigation, Pagination, EffectFade } from 'swiper/modules';
 import 'swiper/css/bundle'
 import { ref } from 'vue';
 import Contact from '../components/Contact.vue';
+import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
 
 
 defineProps({
