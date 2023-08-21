@@ -311,7 +311,7 @@ class Listing
     #[ORM\PrePersist]
     public function setCreatedAtValue()
     {
-        $this->createdAt = new \DateTimeImmutable;
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function setCreatedAt(\DateTimeImmutable $createdAt): static

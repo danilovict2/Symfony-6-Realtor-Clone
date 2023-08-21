@@ -83,5 +83,4 @@ class ListingRepository extends ServiceEntityRepository
 
         return $this->findBy(['type' => $type], ['createdAt' => 'DESC'], self::FETCH_LIMIT);
     }
-
 }

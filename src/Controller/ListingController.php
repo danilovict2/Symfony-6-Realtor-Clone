@@ -66,7 +66,7 @@ class ListingController extends AbstractController
             'listing' => $listing
         ]);
     }
-    
+
     #[Route('/delete/{listing}', name: 'listing_delete', methods: ["POST"])]
     public function delete(Listing $listing, EntityManagerInterface $entityManager): Response
     {
@@ -74,7 +74,7 @@ class ListingController extends AbstractController
         $entityManager->flush();
         return $this->redirectToRoute('profile');
     }
-    
+
     #[Route('/api/fetch/{offset}', name: 'listings_fetch')]
     public function fetchListings(int $offset, ListingRepository $listingRepository): Response
     {
