@@ -107,7 +107,8 @@ class Listing
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
             'images' => array_map(fn($image) => (string)$image, $this->images->toArray()),
-            'landlord' => $this->createdBy->toArray()
+            'landlord' => $this->createdBy->toArray(),
+            'createdAt' => $this->createdAt->format('Y-m-d H:i:s')
         ];
     }
 
