@@ -1,10 +1,5 @@
 <template>
-  <swiper :modules="[EffectFade, Navigation, Pagination]" :slides-per-view="1" navigation
-    :pagination="{ type: 'progressbar' }" effect="fade">
-    <swiper-slide v-for="(image, index) in listing.images" :key="index">
-      <img class="relative w-full overflow-hidden swiper-image" :src="'/uploads/photos/' + image">
-    </swiper-slide>
-  </swiper>
+  <slider :images="listing.images"></slider>
   <div class="m-4 flex max-w-6xl lg:mx-auto p-4 rounded-lg shadow-lg bg-white lg:space-x-5">
     <div class="w-full">
       <p class="text-2xl font-bold mb-3 text-blue-900">
@@ -84,6 +79,7 @@ import 'swiper/css/bundle'
 import { ref } from 'vue';
 import Contact from '../components/Contact.vue';
 import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
+import Slider from '../components/Slider.vue';
 
 
 defineProps({
@@ -92,9 +88,3 @@ defineProps({
 
 let isContactLandlordEnabled = ref(false);
 </script>
-
-<style>
-.swiper-image {
-  height: 300px;
-}
-</style>

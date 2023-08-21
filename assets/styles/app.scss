@@ -2,18 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 @import "~vue-toastify/index.css";
-@import '~@fortawesome/fontawesome-free/css/all.css';
+@import "~@fortawesome/fontawesome-free/css/all.css";
 @import "~leaflet/dist/leaflet.css";
 
 body {
-    background-color: rgb(240, 253, 244);
+  background-color: rgb(240, 253, 244);
 }
 
 .swiper-button-next,
-.swiper-button-prev{
-    color: #a8dadc;
+.swiper-button-prev {
+  color: #a8dadc;
 }
 
-.swiper-pagination-progressbar .swiper-pagination-progressbar-fill{
-    background: #a8dadc !important
+.swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
+  background: #a8dadc !important;
+}
+
+.swiper-image {
+  height: 300px;
 }
