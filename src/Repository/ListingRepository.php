@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class ListingRepository extends ServiceEntityRepository
 {
     public const LISTING_TYPES = ['sale', 'rent'];
+    public const FETCH_LIMIT = 5;
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -60,7 +61,7 @@ class ListingRepository extends ServiceEntityRepository
 
     public function getRecentListings(): array
     {
-        return $this->findBy([], ['createdAt' => 'DESC'], 5);
+        return $this->findBy([], ['createdAt' => 'DESC'], self::FETCH_LIMIT);
     }
 
     public function getRecentListingsWithOffer(): array
@@ -68,7 +69,7 @@ class ListingRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->where('c.discountedPrice IS NOT NULL')
             ->orderBy('c.createdAt', 'DESC')
-            ->setMaxResults(5)
+            ->setMaxResults(self::FETCH_LIMIT)
             ->getQuery()
             ->execute()
         ;
@@ -80,7 +81,7 @@ class ListingRepository extends ServiceEntityRepository
             throw new \LogicException('Please provide a valid type!');
         }
 
-        return $this->findBy(['type' => $type], ['createdAt' => 'DESC'], 5);
+        return $this->findBy(['type' => $type], ['createdAt' => 'DESC'], self::FETCH_LIMIT);
     }
 
 }
