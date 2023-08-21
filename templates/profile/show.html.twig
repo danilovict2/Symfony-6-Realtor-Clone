@@ -10,7 +10,7 @@
 			<h2 class="text-2xl text-center font-semibold mb-6">My Listings</h2>
 			<ul class="sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
 				{% for listing in listings %}
-					<div {{ vue_component('ListingItem', {listing: listing.toArray()} ) }}></div>
+					<div {{ vue_component('ListingItem', {listing: listing.toArray(), isEditableAndDeletable: true} ) }}></div>
 				{% endfor %}
 			</ul>
 		{% endif %}

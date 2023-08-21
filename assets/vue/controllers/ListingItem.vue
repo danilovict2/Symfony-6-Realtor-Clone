@@ -42,14 +42,14 @@
             </div>
         </a>
 
-        <form :action="'/listing/delete/' + listing.id" method="post">
+        <form :action="'/listing/delete/' + listing.id" method="post" v-show="props.isEditableAndDeletable">
             <button type="submit">
                 <i class="fa-solid fa-trash absolute bottom-2 right-2 h-[14px] cursor-pointer text-red-500"></i>
             </button>
         </form>
 
         <a :href="'/listing/edit/' + listing.id">
-            <i class="fa-solid fa-pen absolute bottom-2 right-7 h-4 cursor-pointer"></i>
+            <i class="fa-solid fa-pen absolute bottom-2 right-7 h-4 cursor-pointer" v-show="props.isEditableAndDeletable"></i>
         </a>
     </li>
 </template>
@@ -58,7 +58,11 @@
 import { ref } from 'vue';
 
 let props = defineProps({
-    listing: Object
+    listing: Object,
+    isEditableAndDeletable: {
+        type: Boolean,
+        default: false
+    }
 });
 
 let listing = ref(props.listing);
