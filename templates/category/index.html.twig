@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Places for {{ category }}{% endblock %}
+
+{% block body %}
+    <div {{ vue_component('Category', {category: category}) }}></div>
+{% endblock %}
