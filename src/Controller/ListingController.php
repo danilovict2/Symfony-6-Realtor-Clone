@@ -74,6 +74,14 @@ class ListingController extends AbstractController
         $entityManager->flush();
         return $this->redirectToRoute('profile');
     }
+    
+    #[Route('/api/fetch/{offset}', name: 'listings_fetch')]
+    public function fetchListings(int $offset, ListingRepository $listingRepository): Response
+    {
+        $listings = $listingRepository->findBy([], ['createdAt' => 'DESC'], ListingRepository::FETCH_LIMIT + $offset);
+        $listings = array_map(fn($listing) => $listing->toArray(), $listings);
+        return new Response(json_encode(['listings' => $listings]));
+    }
 
     #[Route('/{category}/{listing}', name: 'listing_show')]
     public function show(string $category, Listing $listing): Response

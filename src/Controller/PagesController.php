@@ -23,4 +23,10 @@ class PagesController extends AbstractController
             'saleListings' => $saleListings,
         ]);
     }
+
+    #[Route('/offers', name: 'offers')]
+    public function offers(): Response
+    {
+        return $this->render('pages/offers.html.twig');
+    }
 }

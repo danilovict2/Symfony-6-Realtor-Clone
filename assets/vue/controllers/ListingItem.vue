@@ -61,7 +61,6 @@ let props = defineProps({
     listing: Object
 });
 
-console.log(props.listing.createdAt);
 let listing = ref(props.listing);
 listing.value.createdAt = new Date(listing.value.createdAt);
 </script>
