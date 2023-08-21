@@ -17,6 +17,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ListingRepository extends ServiceEntityRepository
 {
+    public const LISTING_TYPES = ['sale', 'rent'];
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Listing::class);
@@ -55,4 +57,30 @@ class ListingRepository extends ServiceEntityRepository
             $entityManager->persist($listingImage);
         }
     }
+
+    public function getRecentListings(): array
+    {
+        return $this->findBy([], ['createdAt' => 'DESC'], 5);
+    }
+
+    public function getRecentListingsWithOffer(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.discountedPrice IS NOT NULL')
+            ->orderBy('c.createdAt', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
+    public function getRecentListingsOfType(string $type): array
+    {
+        if (!in_array($type, self::LISTING_TYPES)) {
+            throw new \LogicException('Please provide a valid type!');
+        }
+
+        return $this->findBy(['type' => $type], ['createdAt' => 'DESC'], 5);
+    }
+
 }

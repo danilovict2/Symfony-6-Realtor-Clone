@@ -21,3 +21,11 @@ body {
 .swiper-image {
   height: 300px;
 }
+
+html::-webkit-scrollbar{
+  display: none;
+}
+
+html{
+  scrollbar-width: none;
+}
