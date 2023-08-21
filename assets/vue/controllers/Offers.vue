@@ -4,7 +4,7 @@
         <div v-if="listings.length > 0">
             <main>
                 <ul class="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                    <listing-item v-for="(listing, index) in listings" :key="listing.id" :listing="listing"></listing-item>
+                    <listing-item v-for="listing in listings" :key="listing.id" :listing="listing"></listing-item>
                 </ul>
             </main>
 
